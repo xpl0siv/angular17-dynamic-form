@@ -15,11 +15,6 @@ export interface Tipo {
 }
 
 /**
- * El form group requiere de una 'key'
- */
-export interface ItemsFormGroup extends FormGroup {}
-
-/**
  * Define la 'key' del formGroup que contiene un FormArray.
  */
 export interface ItemsFormArray<T extends { [K in keyof T]: AbstractControl<any, any> }> {
@@ -55,7 +50,7 @@ export interface ItemsFormArray<T extends { [K in keyof T]: AbstractControl<any,
 export class PermissionsComponent implements OnInit {
   public json?: string;
   #formBuilder: FormBuilder = inject(FormBuilder);
-  form!: ItemsFormGroup;
+  form!: FormGroup;
 
   ngOnInit() {
     this.form = this.#formBuilder.group<ItemsFormArray<Tipo>>({
