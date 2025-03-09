@@ -1,6 +1,7 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
@@ -21,8 +22,8 @@ export interface ItemsFormGroup extends FormGroup {}
 /**
  * Define la 'key' del formGroup que contiene un FormArray.
  */
-export interface ItemsFormArray {
-  items: FormArray<FormGroup<Tipo>>;
+export interface ItemsFormArray<T extends { [K in keyof T]: AbstractControl<any, any> }> {
+  items: FormArray<FormGroup<T>>;
 }
 
 @Component({
@@ -57,7 +58,7 @@ export class PermissionsComponent implements OnInit {
   form!: ItemsFormGroup;
 
   ngOnInit() {
-    this.form = this.#formBuilder.group<ItemsFormArray>({
+    this.form = this.#formBuilder.group<ItemsFormArray<Tipo>>({
       items: this.#formBuilder.array<FormGroup>([
         this.#formBuilder.group<Tipo>({
           item: this.#formBuilder.control('A'),
